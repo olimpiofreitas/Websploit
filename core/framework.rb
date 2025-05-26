@@ -1,4 +1,3 @@
-
 require_relative 'module_loader'
 
 module Websploit
@@ -11,14 +10,13 @@ module Websploit
 
     def banner
       puts <<~BANNER
-           _       _     _       _ _   
-          | |     (_)   | |     (_) |  
-      __ _| | ___  _  __| | ___  _| |_ 
-     / _` | |/ _ \| |/ _` |/ _ \| | __|
-    | (_| | | (_) | | (_| | (_) | | |_ 
-     \__, |_|\___/|_|\__,_|\___/|_|\__|
-      __/ |                            
-     |___/      Websploit Framework v1.0
+               __                                                                
+   _______  __/ /_  ____  _________ _      ______________ _____  ____  ___  _____
+  / ___/ / / / __ \\/ __ \\/ ___/ __ `/_____/ ___/ ___/ __ `/ __ \\/ __ \\/ _ \\/ ___/
+ / /__/ /_/ / /_/ / /_/ / /  / /_/ /_____(__  ) /__/ /_/ / / / / / / /  __/ /    
+ \\___/\\__, /_.___/\\____/_/   \\__, /     /____/\\___/\\__,_/_/ /_/_/ /_/\\___/_/     
+     /____/                 /____/                                               
+                                                  Websploit Framework v1.0
 
       Type `help` to list commands.
 
@@ -29,7 +27,7 @@ module Websploit
       loop do
         prompt = @current_module ? "websploit (#{@current_module}) > " : "websploit > "
         print prompt
-        input = gets.strip
+        input = gets.strip.downcase
         case input
         when "exit", "quit"
           puts "Bye!"
@@ -48,7 +46,8 @@ module Websploit
           end
         when /^set (\w+) (.+)/
           if @instance
-            @instance.set_option($1, $2)
+            option_name = $1.upcase
+            @instance.set_option(option_name, $2)
           else
             puts "No module selected"
           end
