@@ -1,83 +1,83 @@
 # Websploit Framework
 
-Websploit Framework é uma ferramenta de segurança web que integra várias ferramentas populares de pentest em uma interface unificada, inspirada no Metasploit Framework.
+Websploit Framework is a web security tool that integrates various popular pentesting tools into a unified interface, inspired by the Metasploit Framework.
 
-## 🚀 Características
+## 🚀 Features
 
-- Interface estilo Metasploit (`use`, `set`, `show options`, `run`)
-- Arquitetura baseada em módulos para scanners, exploits e integrações
-- Suporte a módulos personalizados
-- Integração com ferramentas externas:
+- Metasploit-style interface (`use`, `set`, `show options`, `run`)
+- Module-based architecture for scanners, exploits, and integrations
+- Custom module support
+- External tool integration:
   - [x] Nuclei
   - [x] SQLMap
   - [x] Dirsearch
-  - [x] E muito mais...
+  - [x] And more...
 
-## 📦 Requisitos
+## 📦 Requirements
 
-### Instalação Normal
+### Normal Installation
 - Ruby >= 2.5
-- Ferramentas no `$PATH`:
+- Tools in `$PATH`:
   - `nuclei`
   - `sqlmap`
   - `dirsearch`
 
-### Instalação com Docker
+### Docker Installation
 - Docker
-- Docker Compose (opcional)
+- Docker Compose (optional)
 
-## 🛠️ Instalação
+## 🛠️ Installation
 
-### Método 1: Instalação Normal
+### Method 1: Normal Installation
 
-1. Clone o repositório:
+1. Clone the repository:
 ```bash
 git clone https://github.com/Websploit/websploit.git
 cd websploit
 ```
 
-2. Instale as dependências:
+2. Install dependencies:
 ```bash
-# Instalar Nuclei
+# Install Nuclei
 wget https://github.com/projectdiscovery/nuclei/releases/download/v2.9.4/nuclei_2.9.4_linux_amd64.zip
 unzip nuclei_2.9.4_linux_amd64.zip
 sudo mv nuclei /usr/local/bin/
 
-# Instalar SQLMap
+# Install SQLMap
 git clone https://github.com/sqlmapproject/sqlmap.git /opt/sqlmap
 sudo ln -s /opt/sqlmap/sqlmap.py /usr/local/bin/sqlmap
 
-# Instalar Dirsearch
+# Install Dirsearch
 pip3 install dirsearch
 ```
 
-3. Execute o framework:
+3. Run the framework:
 ```bash
 chmod +x websploit.rb
 ./websploit.rb
 ```
 
-### Método 2: Instalação com Docker
+### Method 2: Docker Installation
 
-1. Clone o repositório:
+1. Clone the repository:
 ```bash
 git clone https://github.com/Websploit/websploit.git
 cd websploit
 ```
 
-2. Construa a imagem Docker:
+2. Build the Docker image:
 ```bash
 docker build -t websploit .
 ```
 
-3. Execute o container:
+3. Run the container:
 ```bash
 docker run -it --rm websploit
 ```
 
-Ou usando Docker Compose:
+Or using Docker Compose:
 
-1. Crie um arquivo `docker-compose.yml`:
+1. Create a `docker-compose.yml` file:
 ```yaml
 version: '3'
 services:
@@ -89,48 +89,48 @@ services:
     stdin_open: true
 ```
 
-2. Execute com Docker Compose:
+2. Run with Docker Compose:
 ```bash
 docker-compose up
 ```
 
-## 📁 Módulos Disponíveis
+## 📁 Available Modules
 
 ### Scanner
-- `scanner/nuclei` - Scanner de vulnerabilidades usando Nuclei
-- `scanner/dirsearch` - Scanner de diretórios usando Dirsearch
-- `scanner/sqlmap` - Scanner de injeção SQL usando SQLMap
-- `scanner/dir_enum` - Enumeração de diretórios com threads
+- `scanner/nuclei` - Vulnerability scanner using Nuclei
+- `scanner/dirsearch` - Directory scanner using Dirsearch
+- `scanner/sqlmap` - SQL injection scanner using SQLMap
+- `scanner/dir_enum` - Directory enumeration with threads
 
 ### Exploit
-- `exploit/xss` - Teste de Cross-Site Scripting (XSS)
-- `exploit/lfi` - Teste de Local File Inclusion (LFI)
-- `exploit/ssrf` - Teste de Server-Side Request Forgery (SSRF)
-- `exploit/xxe` - Teste de XML External Entity (XXE)
-- `exploit/sql_injection` - Teste de injeção SQL
+- `exploit/xss` - Cross-Site Scripting (XSS) testing
+- `exploit/lfi` - Local File Inclusion (LFI) testing
+- `exploit/ssrf` - Server-Side Request Forgery (SSRF) testing
+- `exploit/xxe` - XML External Entity (XXE) testing
+- `exploit/sql_injection` - SQL injection testing
 
 ### Auxiliary
-- `auxiliary/port_scan` - Scanner de portas
+- `auxiliary/port_scan` - Port scanner
 
 ### Post
-- `post/shell_upload` - Upload de shells
+- `post/shell_upload` - Shell upload
 
-## 🎮 Uso
+## 🎮 Usage
 
-### Comandos Básicos
-- `help` - Mostra a lista de comandos disponíveis
-- `list` - Lista todos os módulos disponíveis
-- `use <module>` - Seleciona um módulo para uso
-- `set <option> <value>` - Define o valor de uma opção
-- `show options` - Mostra as opções disponíveis do módulo atual
-- `run` - Executa o módulo selecionado
-- `save` - Salva a sessão atual
-- `load` - Carrega uma sessão salva
-- `exit` ou `quit` - Sai do framework
+### Basic Commands
+- `help` - Shows available commands
+- `list` - Lists all available modules
+- `use <module>` - Selects a module for use
+- `set <option> <value>` - Sets an option value
+- `show options` - Shows available options for current module
+- `run` - Runs the selected module
+- `save` - Saves current session
+- `load` - Loads a saved session
+- `exit` or `quit` - Exits the framework
 
-### Exemplos de Uso
+### Usage Examples
 
-1. Usando o scanner Nuclei:
+1. Using Nuclei scanner:
 ```
 websploit > use scanner/nuclei
 websploit (scanner/nuclei) > set target http://example.com
@@ -138,7 +138,7 @@ websploit (scanner/nuclei) > set template cves/
 websploit (scanner/nuclei) > run
 ```
 
-2. Testando XSS:
+2. Testing XSS:
 ```
 websploit > use exploit/xss
 websploit (exploit/xss) > set target http://example.com
@@ -146,7 +146,7 @@ websploit (exploit/xss) > set param search
 websploit (exploit/xss) > run
 ```
 
-3. Testando LFI:
+3. Testing LFI:
 ```
 websploit > use exploit/lfi
 websploit (exploit/lfi) > set target http://example.com
@@ -154,9 +154,9 @@ websploit (exploit/lfi) > set param file
 websploit (exploit/lfi) > run
 ```
 
-## 📦 Módulos Personalizados
+## 📦 Custom Modules
 
-Crie um arquivo `.rb` em `modules/scanner/` ou `modules/exploit/`:
+Create a `.rb` file in `modules/scanner/` or `modules/exploit/`:
 
 ```ruby
 require_relative '../../core/base_module'
@@ -174,18 +174,18 @@ module Websploit
 end
 ```
 
-## 🔒 Salvando Sessões
+## 🔒 Saving Sessions
 
-As sessões são salvas no diretório `sessions/` dentro do container. Para persistir as sessões entre execuções, monte o volume como mostrado no exemplo do Docker Compose acima.
+Sessions are saved in the `sessions/` directory inside the container. To persist sessions between runs, mount the volume as shown in the Docker Compose example above.
 
-## ⚠️ Aviso Legal
+## ⚠️ Legal Notice
 
-Esta ferramenta é para fins **educacionais e testes autorizados** apenas. Use com responsabilidade.
+This tool is for **educational and authorized testing** purposes only. Use responsibly.
 
-## 👥 Contribuindo
+## 👥 Contributing
 
-Contribuições são bem-vindas! Por favor, sinta-se à vontade para enviar pull requests.
+Contributions are welcome! Please feel free to submit pull requests.
 
-## 📝 Licença
+## 📝 License
 
-Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para mais detalhes.
+This project is licensed under the MIT License - see the LICENSE file for details.
