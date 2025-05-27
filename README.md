@@ -1,80 +1,91 @@
 # Websploit Framework
 
-> A modular offensive security framework for web application testing — written in Ruby, inspired by Metasploit.
+Websploit Framework é uma ferramenta de segurança web que integra várias ferramentas populares de pentest em uma interface unificada.
 
-## 🚀 Features
+## Requisitos
 
-- Metasploit-style interface (`use`, `set`, `show options`, `run`)
-- Module-based architecture for scanners, exploits, integrations
-- Custom module support (easily create your own)
-- Threaded enumeration
-- External tool integration:
-  - [x] Nuclei
-  - [x] SQLMap
-  - [x] Dirsearch
+- Docker
+- Docker Compose (opcional)
 
-## 📦 Requirements
+## Instalação com Docker
 
-- Ruby >= 2.5
-- Tools in `$PATH`:
-  - `nuclei`
-  - `sqlmap`
-  - `dirsearch`
-
-## 🛠️ Setup
-
+1. Clone o repositório:
 ```bash
-git clone https://github.com/youruser/websploit.git
+git clone https://github.com/Websploit/websploit.git
 cd websploit
-chmod +x websploit.rb
 ```
 
-## 🧪 Usage
-
+2. Construa a imagem Docker:
 ```bash
-./websploit.rb
+docker build -t websploit .
 ```
 
-Then inside the console:
-
+3. Execute o container:
 ```bash
-websploit > list
-websploit > use scanner/dir_enum
-websploit > set TARGET http://example.com
-websploit > show options
-websploit > run
+docker run -it --rm websploit
 ```
 
-## 📁 Modules
+## Módulos Disponíveis
 
-| Path                    | Description                            |
-|-------------------------|----------------------------------------|
-| scanner/dir_enum        | Directory brute-force with threads     |
-| scanner/nuclei          | Nuclei scanner wrapper                 |
-| scanner/sqlmap          | SQLMap wrapper                         |
-| scanner/dirsearch       | Dirsearch wrapper                      |
-| exploit/example_sql_injection | Demo SQLi checker (basic)        |
-
-## 📦 Custom Modules
-
-Create a `.rb` file in `modules/scanner/` or `modules/exploit/`:
-
-```ruby
-class MyCustom < Websploit::BaseModule
-  path 'scanner/my_custom'
-
-  register_option 'TARGET', default: 'http://localhost', required: true, description: 'Target URL'
-
-  def run
-    puts "Running on #{options['TARGET'][:current]}"
-  end
-end
+### Scanner/Nuclei
+Scanner de vulnerabilidades usando Nuclei:
+```
+websploit > use scanner/nuclei
+websploit (scanner/nuclei) > set target http://example.com
+websploit (scanner/nuclei) > set template cves/
+websploit (scanner/nuclei) > run
 ```
 
-## 🧑‍💻 Author
+### Scanner/Dirsearch
+Scanner de diretórios usando Dirsearch:
+```
+websploit > use scanner/dirsearch
+websploit (scanner/dirsearch) > set target http://example.com
+websploit (scanner/dirsearch) > set wordlist /usr/share/wordlists/dirb/common.txt
+websploit (scanner/dirsearch) > run
+```
 
-- Made by Olimpio Freitas
+## Comandos Disponíveis
 
-## 🛡️ Disclaimer
+- `help` - Mostra a lista de comandos disponíveis
+- `list` - Lista todos os módulos disponíveis
+- `use <module>` - Seleciona um módulo para uso
+- `set <option> <value>` - Define o valor de uma opção
+- `show options` - Mostra as opções disponíveis do módulo atual
+- `run` - Executa o módulo selecionado
+- `save` - Salva a sessão atual
+- `load` - Carrega uma sessão salva
+- `exit` ou `quit` - Sai do framework
 
-This tool is for **educational and authorized testing** purposes only. Use responsibly.
+## Docker Compose (Opcional)
+
+Para facilitar o uso, você pode usar o Docker Compose:
+
+1. Crie um arquivo `docker-compose.yml`:
+```yaml
+version: '3'
+services:
+  websploit:
+    build: .
+    volumes:
+      - ./sessions:/app/sessions
+    tty: true
+    stdin_open: true
+```
+
+2. Execute com Docker Compose:
+```bash
+docker-compose up
+```
+
+## Salvando Sessões
+
+As sessões são salvas no diretório `sessions/` dentro do container. Para persistir as sessões entre execuções, monte o volume como mostrado no exemplo do Docker Compose acima.
+
+## Contribuindo
+
+Contribuições são bem-vindas! Por favor, sinta-se à vontade para enviar pull requests.
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para mais detalhes.

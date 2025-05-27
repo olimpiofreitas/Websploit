@@ -10,13 +10,13 @@ module Websploit
 
     def banner
       puts <<~BANNER
-               __                                                                
-   _______  __/ /_  ____  _________ _      ______________ _____  ____  ___  _____
-  / ___/ / / / __ \\/ __ \\/ ___/ __ `/_____/ ___/ ___/ __ `/ __ \\/ __ \\/ _ \\/ ___/
- / /__/ /_/ / /_/ / /_/ / /  / /_/ /_____(__  ) /__/ /_/ / / / / / / /  __/ /    
- \\___/\\__, /_.___/\\____/_/   \\__, /     /____/\\___/\\__,_/_/ /_/_/ /_/\\___/_/     
-     /____/                 /____/                                               
-                                                  Websploit Framework v1.0
+                __                                                                
+    _______  __/ /_  ____  _________ _      ______________ _____  ____  ___  _____
+   / ___/ / / / __ \\/ __ \\/ ___/ __ `/_____/ ___/ ___/ __ `/ __ \\/ __ \\/ _ \\/ ___/
+  / /__/ /_/ / /_/ / /_/ / /  / /_/ /_____(__  ) /__/ /_/ / / / / / / /  __/ /    
+  \\___/\\__, /_.___/\\____/_/   \\__, /     /____/\\___/\\__,_/_/ /_/_/ /_/\\___/_/     
+      /____/                 /____/                                               
+                                                   Websploit Framework v1.0
 
       Type `help` to list commands.
 
@@ -35,7 +35,13 @@ module Websploit
         when "help"
           puts "Available commands: help, list, use, set, show options, run, save, load, exit"
         when "list"
-          @modules.each_key { |m| puts "- #{m}" }
+          puts "\nAvailable modules:\n"
+          @modules.each do |path, module_class|
+            type = path.split('/').first
+            name = path.split('/').last
+            puts "  #{type.ljust(10)} #{name}"
+          end
+          puts "\nUse 'use <module_path>' to select a module"
         when /^use (.+)/
           name = $1
           if @modules.key?(name)

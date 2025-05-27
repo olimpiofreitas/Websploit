@@ -1,39 +1,38 @@
-FROM ruby:3.2
+FROM ruby:3.0-slim
 
-LABEL maintainer="websploit@example.com"
-LABEL description="Websploit - Web Offensive Security Framework"
-
-# Diretório de trabalho
-WORKDIR /websploit
-
-# Copia os arquivos do projeto
-COPY . /websploit
-
-# Instala ferramentas adicionais
+# Instalar dependências necessárias
 RUN apt-get update && apt-get install -y \
-    git \
-    python3-pip \
     python3 \
-    curl \
-    unzip
+    python3-pip \
+    git \
+    wget \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
 
-# Instalar sqlmap (versão via git)
-RUN git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git /opt/sqlmap
-ENV PATH="/opt/sqlmap:$PATH"
+# Instalar ferramentas de segurança
+RUN pip3 install dirsearch
 
-# Instalar nuclei
-RUN curl -s https://api.github.com/repos/projectdiscovery/nuclei/releases/latest \
-  | grep "browser_download_url.*linux_amd64.zip" \
-  | cut -d : -f 2,3 \
-  | tr -d \" \
-  | wget -qi - -O nuclei.zip && \
-  unzip nuclei.zip -d /usr/local/bin && rm nuclei.zip
+# Instalar Nuclei
+RUN wget -q https://github.com/projectdiscovery/nuclei/releases/download/v2.9.4/nuclei_2.9.4_linux_amd64.zip \
+    && unzip nuclei_2.9.4_linux_amd64.zip \
+    && mv nuclei /usr/local/bin/ \
+    && rm nuclei_2.9.4_linux_amd64.zip
 
-# Instalar dirsearch
-RUN git clone https://github.com/maurosoria/dirsearch.git /opt/dirsearch
-ENV PATH="/opt/dirsearch:$PATH"
+# Instalar SQLMap
+RUN git clone https://github.com/sqlmapproject/sqlmap.git /opt/sqlmap \
+    && ln -s /opt/sqlmap/sqlmap.py /usr/local/bin/sqlmap
 
-# Permissão de execução
-RUN chmod +x /websploit/websploit.rb
+# Criar diretório da aplicação
+WORKDIR /app
 
+# Copiar arquivos do projeto
+COPY . .
+
+# Criar diretório para sessões
+RUN mkdir -p sessions
+
+# Tornar o script executável
+RUN chmod +x websploit.rb
+
+# Definir o comando padrão
 ENTRYPOINT ["./websploit.rb"]
