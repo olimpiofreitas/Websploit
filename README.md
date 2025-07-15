@@ -71,10 +71,3 @@ class MyCustom < Websploit::BaseModule
 end
 ```
 
-## 🧑‍💻 Author
-
-- Made by Olimpio Freitas
-
-## 🛡️ Disclaimer
-
-This tool is for **educational and authorized testing** purposes only. Use responsibly.
